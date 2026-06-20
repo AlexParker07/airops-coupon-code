@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirOps Content Production Tracker</title>
+<style>
+:root{
+--bg:#0f172a;
+--card:#1e293b;
+--line:#334155;
+--text:#f8fafc;
+--muted:#94a3b8;
+--accent:#22c55e;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background:var(--bg);
+font-family:Arial,Helvetica,sans-serif;
+color:var(--text);
+padding:24px;
+display:flex;
+flex-direction:column;
+align-items:center;
+min-height:100vh;
+}
+.card{
+background:var(--card);
+padding:24px;
+border-radius:16px;
+max-width:500px;
+width:100%;
+border:1px solid var(--line);
+}
+h1{text-align:center}
+.stats{
+display:flex;
+gap:12px;
+margin:20px 0;
+}
+.stat{
+flex:1;
+padding:15px;
+background:#0b1220;
+border-radius:10px;
+text-align:center;
+}
+.value{
+font-size:28px;
+font-weight:bold;
+}
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+}
+.primary{
+background:var(--accent);
+}
+.cta{
+display:block;
+text-align:center;
+margin-top:20px;
+padding:14px;
+background:#facc15;
+color:#000;
+font-weight:bold;
+border-radius:10px;
+text-decoration:none;
+}
+footer{
+margin-top:20px;
+font-size:12px;
+color:var(--muted);
+text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h1>🚀 AirOps Content Tracker</h1>
+<p>Track how many AI content workflows you've completed this month.</p>
+
+<div class="stats">
+<div class="stat">
+<div>Workflows</div>
+<div class="value" id="count">0</div>
+</div>
+
+<div class="stat">
+<div>Streak</div>
+<div class="value" id="streak">0</div>
+</div>
+</div>
+
+<button class="primary" id="completeBtn">Complete Workflow</button>
+<button id="resetBtn">Reset Progress</button>
+
+<a class="cta" href="https://tinyurl.com/ydszbr2e" target="_blank" rel="noopener sponsored">
+🎁 Try AirOps Free + 14-Day Trial
+</a>
+</div>
+
+<footer>
+This page contains affiliate links. Not affiliated with or endorsed by AirOps.
+</footer>
+
+<script>
+let workflows=parseInt(localStorage.getItem("airops_workflows")||"0");
+let streak=parseInt(localStorage.getItem("airops_streak")||"0");
+let last=localStorage.getItem("airops_last");
+
+function render(){
+document.getElementById("count").innerText=workflows;
+document.getElementById("streak").innerText=streak;
+}
+
+document.getElementById("completeBtn").onclick=function(){
+const today=new Date().toDateString();
+
+if(last!==today){
+streak++;
+last=today;
+}
+
+workflows++;
+localStorage.setItem("airops_workflows",workflows);
+localStorage.setItem("airops_streak",streak);
+localStorage.setItem("airops_last",last);
+
+render();
+}
+
+document.getElementById("resetBtn").onclick=function(){
+localStorage.clear();
+workflows=0;
+streak=0;
+last=null;
+render();
+}
+
+render();
+</script>
+
+</body>
+</html>
